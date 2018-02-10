@@ -18287,19 +18287,15 @@ var _reactDom = __webpack_require__(8);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Input = __webpack_require__(28);
-
-var _Input2 = _interopRequireDefault(_Input);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var colors = ['black', 'white', 'pink', 'green', 'brown', 'red', 'grey'];
 
 var FormContainer = function (_Component) {
   _inherits(FormContainer, _Component);
@@ -18310,33 +18306,44 @@ var FormContainer = function (_Component) {
     var _this = _possibleConstructorReturn(this, (FormContainer.__proto__ || Object.getPrototypeOf(FormContainer)).call(this));
 
     _this.state = {
-      seo_title: ""
+      colorId: 0
     };
-    _this.handleChange = _this.handleChange.bind(_this);
+
+    _this.changeColor = _this.changeColor.bind(_this);
     return _this;
   }
 
   _createClass(FormContainer, [{
-    key: "handleChange",
-    value: function handleChange(event) {
-      this.setState(_defineProperty({}, event.target.id, event.target.value));
+    key: "changeColor",
+    value: function changeColor() {
+      var colorId = this.state.colorId;
+
+      var newColorId = (colorId + 1) % colors.length;
+      console.log(newColorId);
+      this.setState({ colorId: newColorId });
     }
   }, {
     key: "render",
     value: function render() {
-      var seo_title = this.state.seo_title;
+      var colorId = this.state.colorId;
 
       return _react2.default.createElement(
-        "form",
-        { id: "article-form" },
-        _react2.default.createElement(_Input2.default, {
-          text: "SEO title",
-          label: "seo_title",
-          type: "text",
-          id: "seo_title",
-          value: seo_title,
-          handleChange: this.handleChange
-        })
+        "div",
+        null,
+        _react2.default.createElement(
+          "h1",
+          {
+            style: { color: colors[colorId] }
+          },
+          "Hello Kate!"
+        ),
+        _react2.default.createElement(
+          "button",
+          {
+            onClick: this.changeColor
+          },
+          "Choose your favorite color!"
+        )
       );
     }
   }]);
@@ -18345,51 +18352,6 @@ var FormContainer = function (_Component) {
 }(_react.Component);
 
 exports.default = FormContainer;
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Input = function Input(_ref) {
-  var label = _ref.label,
-      text = _ref.text,
-      type = _ref.type,
-      id = _ref.id,
-      value = _ref.value,
-      handleChange = _ref.handleChange;
-  return _react2.default.createElement(
-    "div",
-    { className: "form-group" },
-    _react2.default.createElement(
-      "label",
-      { htmlFor: label },
-      text
-    ),
-    _react2.default.createElement("input", {
-      type: type,
-      className: "form-control",
-      id: id,
-      value: value,
-      onChange: handleChange,
-      required: true
-    })
-  );
-};
-
-exports.default = Input;
 
 /***/ })
 /******/ ]);

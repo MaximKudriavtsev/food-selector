@@ -1,31 +1,46 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import Input from "./Input";
+
+const colors = [
+  'black',
+  'white',
+  'pink',
+  'green',
+  'brown',
+  'red',
+  'grey'
+];
 
 class FormContainer extends Component {
   constructor() {
     super();
     this.state = {
-      seo_title: ""
+      colorId: 0
     };
-    this.handleChange = this.handleChange.bind(this);
+
+    this.changeColor = this.changeColor.bind(this);
   }
-  handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+  changeColor() {
+    const { colorId } = this.state;
+    const newColorId = (colorId + 1) % colors.length;
+    console.log(newColorId);
+    this.setState({ colorId: newColorId });
   }
   render() {
-    const { seo_title } = this.state;
+    const { colorId } = this.state;
     return (
-      <form id="article-form">
-        <Input
-          text="SEO title"
-          label="seo_title"
-          type="text"
-          id="seo_title"
-          value={seo_title}
-          handleChange={this.handleChange}
-        />
-      </form>
+      <div>
+        <h1
+          style={{ color: colors[colorId] }}
+        >
+          Hello Kate!
+      </h1>
+        <button
+          onClick={this.changeColor}
+        >
+          Choose your favorite color!
+      </button>
+      </div>
     );
   }
 }
