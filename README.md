@@ -1,2 +1,2 @@
 # food-selector
-The food selecto for you diet
+The food selector for you diet
