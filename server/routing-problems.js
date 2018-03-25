@@ -28,35 +28,13 @@ let chains = [
 export const getChainLength = (chain) => {
   let length = 0;
 
-  chain.forEach((element, index) => {
-    const currentElemIndex = pointIndexes[element];
-    const nextElemIndex = chain[index + 1] ? pointIndexes[chain[index + 1]] : 0;
+  for(let index = 0; index < chain.length - 1; index += 1) {
+    const currentElemIndex = pointIndexes[chain[index]];
+    const nextElemIndex = pointIndexes[chain[index + 1]];
 
     length += values[currentElemIndex][nextElemIndex];
-  });
-
+  }
   return length;
-};
-
-const createChains = (points) => {
-  const chains = [];
-  
-  let currentChain = ['G'];
-  points.forEach((element) => {
-    currentChain.push(element);
-
-    points.forEach(tempElement => {
-      if (currentChain.findIndex(tempElement) === -1) {
-        currentChain.push(tempElement);
-      }
-    });
-
-    currentChain.push('G');
-    chains.chain = currentChain;
-    currentChain = ['G'];
-  });
-  
-  return chains;
 };
 
 export const isFinishChain = (availiablePoints, chain) => {
@@ -77,30 +55,6 @@ export const isFinishChain = (availiablePoints, chain) => {
   }
 
   return true;
-};
-
-export const generateChain = (points, oldChain, minLength) => {
-  const chain = [...oldChain];
-  let currentLength = 0;
-  let newMinLenght = 0;
-  let resultChain = [];
-
-  points.forEach((point) => {
-    if (chain[chain.length - 1] !== point) {
-      chain.push(point);
-    }
-    if (getChainLength(chain) >= minLength) {
-      chain.pop();
-    }
-    if (isFinishChain(chain)) {
-      if (getChainLength(chain) < minLength) {
-        newMinLenght = minLength;
-        resultChain = chain;
-      }
-    }
-  });
-
-  return { chain, minLength };
 };
 
 export const minimalChain = (points, chain, minLength) => {
@@ -132,6 +86,7 @@ export const getMinimalChain = (points) => {
   let minimalLength = getChainLength(minimalChain);
   
   const minimalChain2 = (points, chain, minLength) => {
+    debugger;
     const lastChainPoint = !!chain.length && chain[chain.length - 1];
     const prevChainPoint = !!(chain.length > 1) && chain[chain.length - 2];
     const availiablePoints = points.filter(point => point !== lastChainPoint && point !== prevChainPoint);
@@ -140,13 +95,16 @@ export const getMinimalChain = (points) => {
     if (isFinishChain(points, chain)) {
       if (currentChainLenght < minLength) {
 
-        minimalLength = minLength;
+        minimalLength = currentChainLenght;
         minimalChain = chain;
-        console.log(chain);
-        minimalChain2(points, [0], currentChainLenght);
-      } return;
+        
+        minimalChain2(points, [0], minimalLength);
+      } 
+      console.log(chain);
+      return;
     }
     if (currentChainLenght >= minLength) {
+      console.log(chain);
       return;
     }
     availiablePoints.forEach((point) => {

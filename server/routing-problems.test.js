@@ -39,6 +39,11 @@ describe('Routing functions', () => {
       const result = getChainLength([0, 1, -1, 0]);
       expect(result).toEqual(5);
     });
+
+    it('should work', () => {
+      const result = getChainLength([0, 1, 0, -1]);
+      expect(result).toEqual(5);
+    });
   });
 
   describe('#getMinimalChain', () => {
