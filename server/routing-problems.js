@@ -100,7 +100,6 @@ export const getMinimalChain = (points) => {
         
         minimalChain2(points, [0], minimalLength);
       } 
-      console.log(chain);
       return;
     }
     if (currentChainLenght >= minLength) {
