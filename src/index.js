@@ -1,7 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import FormContainer from './components/FormContainer';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import App from './containers/App';
 
-const wrapper = document.getElementById('root');
-
-wrapper ? ReactDOM.render(<FormContainer />, wrapper) : false;
+ReactDOM.render(<App/>, document.getElementById('root'));
