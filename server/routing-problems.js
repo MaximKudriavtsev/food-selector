@@ -110,7 +110,6 @@ export const getMinimalChain = (points) => {
     availiablePoints.forEach((point) => {
       const nextChain = chain.slice();
       nextChain.push(point);
-      // console.log(chain);
       minimalChain2(points, nextChain, minLength);
     });
   };
