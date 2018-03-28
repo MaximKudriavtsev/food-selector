@@ -79,41 +79,55 @@ export const minimalChain = (points, chain, minLength) => {
 };
 
 
+const getAvailiablePoints = (points, chain) => {
+  const availiablePoints = [];
+
+
+  
+  return availiablePoints;
+};
+
 export const getMinimalChain = (points) => {
   debugger;
   let minimalChain = points.slice();
   minimalChain.push(0);
   let minimalLength = getChainLength(minimalChain);
-  
-  const minimalChain2 = (points, chain, minLength) => {
-    debugger;
-    const lastChainPoint = !!chain.length && chain[chain.length - 1];
-    const prevChainPoint = !!(chain.length > 1) && chain[chain.length - 2];
-    const availiablePoints = points.filter(point => point !== lastChainPoint && point !== prevChainPoint);
-  
-    const currentChainLenght = getChainLength(chain);
-    if (isFinishChain(points, chain)) {
-      if (currentChainLenght < minLength) {
 
-        minimalLength = currentChainLenght;
-        minimalChain = chain;
-        
-        minimalChain2(points, [0], minimalLength);
-      } 
-      return;
-    }
-    if (currentChainLenght >= minLength) {
+  const minimalChain2 = (points, chain, minLength, availiablePoints) => {
+    const currentChainLenght = getChainLength(chain);
+
+    if (currentChainLenght > minLength) {
       console.log(chain);
       return;
     }
+
+    if (isFinishChain(points, chain) && currentChainLenght < minLength) {
+        minLength = currentChainLenght;
+        minimalChain = chain;
+        return;
+    }
+
     availiablePoints.forEach((point) => {
       const nextChain = chain.slice();
+      const nextAvailiablePoints = availiablePoints.map(availiablePoint => {
+        if (point === availiablePoint) {
+          if (point > 0) {
+            return -point;
+          } else return;
+        }
+        return availiablePoint;
+      });
+      if (nextAvailiablePoints[0] === undefined) nextAvailiablePoints[0] = 0; // problem place!
+
       nextChain.push(point);
-      minimalChain2(points, nextChain, minLength);
+      minimalChain2(points, nextChain, minLength, nextAvailiablePoints);
     });
+
+    return;
   };
 
-  minimalChain2(points, [0], minimalLength);
+  const initialAvailiablePoints = points.filter(point => point > 0);
+  minimalChain2(points, [0], minimalLength, initialAvailiablePoints);
 
   console.log({ chain: minimalChain, length: minimalLength });
   return { chain: minimalChain, length: minimalLength };
